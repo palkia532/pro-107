@@ -48,12 +48,32 @@ def drawBox(img,bbox):
 
 
 def drawBox(img,bbox):
-    #write code for this function here
+    x,y,w,h=int(bbox[0]),int(bbox[1]),int(bbox[2]),int(bbox[3])
+    cv2.rectangle(img,(3,1),((x+w),(y+h)),(255,0,255),3,1)
     pass
 
 
 while True:
-   #Write the code inside loop here
-   pass
+    check,img=video.read()
+    success,bbox=tracker.update(img)
+    
+    if success:
+        drawbox(img,bbox)
+    else:
+        cv2.putText(img,"Lost",(75,90),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,0,255),2)
+        
+    goal_track(img,bbox)
+    
+    cv2.imshow()
+    
+    key=cv2.waitkey(1)
+    if key== ord('q'):
+        print("Closing")
+        break
+        
+        
+        
+        
+pass
 video.release()
 cv2.destroyALLwindows() 
